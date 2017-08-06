@@ -1,0 +1,56 @@
+$bps: (
+  sm: 0,
+  md: 768px,
+  bg: 1024px,
+  lg: 1440px
+);
+
+$default-device-w: 375;
+
+@function rwd-size($px, $device-w: $default-device-w) {
+    @return calc(100vw / (#{$device-w}) * #{$px});
+}
+
+@mixin size($bp) {
+    $bps-list: map-keys($bps);
+    $n: index($bps-list, $bp);
+    $bp-next: if($n < length($bps-list), nth($bps-list, $n + 1), null);
+    @if $bp-next {
+        @media (min-width: map-get($bps, $bp)) and (max-width: map-get($bps, $bp-next) - 1px){
+        @content;
+        }
+    }
+    @else {
+        @media (min-width: map-get($bps, $bp)){
+        @content;
+        }
+    }
+}
+
+@mixin from($bp) {
+    @media (min-width: map-get($bps, $bp)){
+        @content;
+    }
+}
+
+@mixin sm {
+    @content;
+}
+
+@mixin from-md {
+    @include from('md') {
+        @content;
+    }
+}
+
+@mixin from-bg {
+    @include from('bg') {
+        @content;
+    }
+}
+
+@mixin lg {
+    @include size('lg') {
+        @content;
+    }
+}

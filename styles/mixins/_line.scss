@@ -1,0 +1,16 @@
+@mixin max-lines($lines, $line-height, $shadow-width: 50px, $shadow-from: rgba(255, 255, 255, 0), $shadow-to: rgba(255, 255, 255, 1)) {
+    max-height: $lines * $line-height;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+        background-image: linear-gradient(90deg, $shadow-from, $shadow-to);
+        bottom: 0;
+        content: "";
+        display: block;
+        height: $line-height;
+        position: absolute;
+        right: 0;
+        width: 50px;
+    }
+}
